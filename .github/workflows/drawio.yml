@@ -22,23 +22,26 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
+      - name: mkdir
+        run: mkdir ./build
 
-      - name: draw.io CLI
-        uses: severgroup-tt/actions-drawio-cli@v1.0.0
+      - name: As is schema to png
+        uses: Burnett01/actions-drawio@1.2
         with:
-          source: ./Task*/*.drawio.xml
-          format: png
-      - name: Commit Diagrams
-        run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git add ./Task*/**/*.png
-          git commit -m "Automated diagram generation"
-          git push origin main
-        if: success() 
+          src: ./Task1/InsureTech_технологическая_архитектура-as-is.drawio.xml
+          dest: ./build/task-1-InsureTech_технологическая_архитектура-as-is.drawio.png
+
+      - name: To be schema to png
+        uses: Burnett01/actions-drawio@1.2
+        with:
+          src: ./Task1/InsureTech_технологическая_архитектура-to-be.drawio.xml
+          dest: ./build/task-1-InsureTech_технологическая_архитектура-to-be.drawio.png
+
+      - name: Upload image as artifact
+        uses: actions/upload-artifact@v6
+        with:
+          name: schemas
+          path: ./build/
