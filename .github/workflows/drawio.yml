@@ -40,6 +40,12 @@ jobs:
           src: ./Task1/InsureTech_технологическая_архитектура-to-be.drawio.xml
           dest: ./build/task-1-InsureTech_технологическая_архитектура-to-be.drawio.png
 
+      - name: C4 schema to png
+        uses: Burnett01/actions-drawio@1.2
+        with:
+          src: ./Task3/InsureTech_C4_container-diagram.drawio.xml
+          dest: ./build/task-3-InsureTech_C4_container-diagram.drawio.png
+
       - name: Upload image as artifact
         uses: actions/upload-artifact@v6
         with:
